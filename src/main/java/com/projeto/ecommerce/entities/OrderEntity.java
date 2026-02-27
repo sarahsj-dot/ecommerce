@@ -21,4 +21,44 @@ public class OrderEntity {
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private PaymentEntity payment;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public LocalDate getMoment() {
+        return moment;
+    }
+
+    public void setMoment(LocalDate moment) {
+        this.moment = moment;
+    }
+
+    public StatusDoPedido getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusDoPedido status) {
+        this.status = status;
+    }
+
+    public UserEntity getClient() {
+        return client;
+    }
+
+    public void setClient(UserEntity client) {
+        this.client = client;
+    }
+
+    public PaymentEntity getPayment() {
+        return payment;
+    }
+
+    public void setPayment(PaymentEntity payment) {
+        this.payment = payment;
+    }
 }
