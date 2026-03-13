@@ -4,6 +4,9 @@ import com.projeto.ecommerce.enums.StatusDoPedido;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -22,6 +25,15 @@ public class OrderEntity {
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private PaymentEntity payment;
 
+    @OneToMany(mappedBy = "id.orderEntity")
+    private Set<OrderItem> items = new HashSet<>();
+
+//    public List<ProductEntity> getItems(){
+////        return items.stream().map(x ->x.getProduct()).toList();
+//    }
+    public void setItems(Set<OrderItem> items){
+        this.items = items;
+    }
     public UUID getId() {
         return id;
     }
