@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
-@Data
 public class OrderItem {
 
     @EmbeddedId
@@ -15,26 +13,46 @@ public class OrderItem {
     private int quantity;
     private double price;
 
+    public OrderItem(){
+    }
+
     public OrderItem(OrderEntity order, ProductEntity product, int quantity, double price){
-        id.setOrderEntity(order);
-        id.setProductEntity(product);
+        id.setOrder(order);
+        id.setProduct(product);
         this.quantity = quantity;
         this.price = price;
     }
 
-    public OrderEntity getOrderEntity(){
-        return getOrderEntity();
+    public OrderEntity getOrder(){
+        return id.getOrder();
     }
 
-    public ProductEntity getProductEntity(){
-        return getProductEntity();
-    }
-    public void setOrderEntity(OrderEntity order) {
-        id.setOrderEntity((order));
+    public void setOrder(OrderEntity order) {
+        id.setOrder(order);
     }
 
-    public void setProductEntity(ProductEntity product) {
-        id.setProductEntity(product);
+    public ProductEntity getProduct(){
+        return id.getProduct();
+    }
+
+    public void setProduct(ProductEntity product) {
+        id.setProduct(product);
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
 }

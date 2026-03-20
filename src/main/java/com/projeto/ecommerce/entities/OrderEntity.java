@@ -25,15 +25,18 @@ public class OrderEntity {
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private PaymentEntity payment;
 
-    @OneToMany(mappedBy = "id.orderEntity")
+    @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> items = new HashSet<>();
 
-//    public List<ProductEntity> getItems(){
-////        return items.stream().map(x ->x.getProduct()).toList();
-//    }
+    public Set<OrderItem> getItems() {
+        return items;
+    }
+
     public void setItems(Set<OrderItem> items){
+
         this.items = items;
     }
+
     public UUID getId() {
         return id;
     }

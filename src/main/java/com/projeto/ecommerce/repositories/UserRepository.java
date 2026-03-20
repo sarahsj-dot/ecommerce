@@ -1,12 +1,12 @@
 package com.projeto.ecommerce.repositories;
 
-import org.apache.catalina.User;
+import com.projeto.ecommerce.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
-    User findByEmail(String Email);
-    Optional<User> findById(long id);
+    Optional<UserEntity> findByEmail(String email);
 }

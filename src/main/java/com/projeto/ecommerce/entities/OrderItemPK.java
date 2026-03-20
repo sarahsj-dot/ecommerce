@@ -30,11 +30,4 @@ public class OrderItemPK {
         this.product = product;
     }
 
-    public OrderEntity setOrderEntity(OrderEntity order) {
-        return order;
-    }
-
-    public ProductEntity setProductEntity(ProductEntity product) {
-        return product;
-    }
 }
