@@ -26,11 +26,12 @@ public class UserEntity {
     private String email;
     private String phone;
     private String password;
-//  Salvar no banco com as informações do Enum e não com zero, 1, 2...
+
+    @ElementCollection  //cria uma tabela auxiliar para armazenar os valores da lista
     @Enumerated(EnumType.STRING)
-//  vai servir pra gerenciar as permissões do usuário
-    private RoleEnum roles;
-//  Anotation pra falar que é uma relaçao 1 para muitos baseado na chave estrangeira client
+    private List<RoleEnum> roles = new ArrayList<>();
+
+    //relacionamento 1:N com o order
     @OneToMany(mappedBy = "client")
 //  Criando uma lista pra mostrar todos os pedidos dos Usuários
     private List<OrderEntity> orders = new ArrayList<>();

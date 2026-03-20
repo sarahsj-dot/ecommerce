@@ -3,9 +3,9 @@ package com.projeto.ecommerce.entities;
 import com.projeto.ecommerce.enums.StatusDoPedido;
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -14,18 +14,21 @@ public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private LocalDate moment;
+    private Instant moment; //momento exato da criação do pedido
     private StatusDoPedido status;
-//  Anotation pra falar que é uma relação de muitos pra 1
+
+    //Relacionamento N:1 com o user
     @ManyToOne
 //  define qual coluna será usada como chave estrangeira na tabela
     @JoinColumn(name  = "cliente_id")
     private UserEntity client;
 
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    //Relacionamento de 1:1 com o payment
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL) // cascade para garantir o payment é salvo ou deletado com o order
     private PaymentEntity payment;
 
-    @OneToMany(mappedBy = "id.order")
+    //relacionamento de 1:N com o orderItem
+    @OneToMany(mappedBy = "id.order", cascade = CascadeType.ALL) //cascade all para que os itens sejam persistidos com o order
     private Set<OrderItem> items = new HashSet<>();
 
     public Set<OrderItem> getItems() {
@@ -33,7 +36,6 @@ public class OrderEntity {
     }
 
     public void setItems(Set<OrderItem> items){
-
         this.items = items;
     }
 
@@ -45,11 +47,11 @@ public class OrderEntity {
         this.id = id;
     }
 
-    public LocalDate getMoment() {
+    public Instant getMoment() {
         return moment;
     }
 
-    public void setMoment(LocalDate moment) {
+    public void setMoment(Instant moment) {
         this.moment = moment;
     }
 

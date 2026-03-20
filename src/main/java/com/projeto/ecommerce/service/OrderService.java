@@ -12,7 +12,9 @@ import com.projeto.ecommerce.repositories.OrderRepository;
 import com.projeto.ecommerce.repositories.ProductRepository;
 import com.projeto.ecommerce.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,6 +32,8 @@ public class OrderService {
         this.productRepository = productRepository;
     }
 
+    // @Transactional garante que todos os saves acontecem na mesma transação, evitando inconsistencia
+    @Transactional
     public OrderResponseDTO create(OrderRequestDTO dto){
         //Busca o cliente pelo id
         UserEntity client = userRepository.findById(dto.getClientId())
@@ -37,7 +41,7 @@ public class OrderService {
 
         //Cria o pedido
         OrderEntity order = new OrderEntity();
-        order.setMoment(LocalDate.now());
+        order.setMoment(Instant.now());
         order.setStatus(StatusDoPedido.AWAITING_PAYMENT);
         order.setClient(client);
 
@@ -52,11 +56,12 @@ public class OrderService {
             order.getItems().add(item);
         }
 
-        order = orderRepository.save(order);
+        order = orderRepository.save(order); //salva novamente para persistir os itens do pedido
 
-        return toResponseDTO(order);
+        return toResponseDTO(order); //converte o orderEntity pra dto e retorna
     }
 
+    //converte orderEntity para response dto
     private OrderResponseDTO toResponseDTO(OrderEntity order) {
         OrderResponseDTO response = new OrderResponseDTO();
         response.setId(order.getId());
@@ -64,6 +69,7 @@ public class OrderService {
         response.setStatus(order.getStatus());
         response.setClientId(order.getClient().getId());
 
+        //converte cada item do order para o dto de item
         List<OrderItemDTO> itemDTOs = order.getItems().stream().map(item -> {
             OrderItemDTO itemDTO = new OrderItemDTO();
             itemDTO.setProductId(item.getProduct().getId());

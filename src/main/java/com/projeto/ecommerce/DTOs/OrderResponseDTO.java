@@ -2,6 +2,7 @@ package com.projeto.ecommerce.DTOs;
 
 import com.projeto.ecommerce.enums.StatusDoPedido;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -9,10 +10,10 @@ import java.util.UUID;
 
 public class OrderResponseDTO {
     private UUID id;
-    private LocalDate moment;
+    private Instant moment;
     private StatusDoPedido status;
     private UUID clientId;
-    private List<OrderItemDTO> items;
+    private List<OrderItemDTO> items; //lista de itens do pedido
 
     public OrderResponseDTO() {}
 
@@ -24,11 +25,11 @@ public class OrderResponseDTO {
         this.id = id;
     }
 
-    public LocalDate getMoment() {
+    public Instant getMoment() {
         return moment;
     }
 
-    public void setMoment(LocalDate moment) {
+    public void setMoment(Instant moment) {
         this.moment = moment;
     }
 

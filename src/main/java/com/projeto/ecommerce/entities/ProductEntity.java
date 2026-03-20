@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,9 +25,16 @@ public class ProductEntity {
     private double price;
     private String imgURL;
 
-    @ManyToMany
+    @ManyToMany // relacionamento de N:N com category
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "produto_id"),
             inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private Set<CategoryEntity> categories = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.product") //relacionamento de 1:N com OrderItem
+    private Set<OrderItem> items = new HashSet<>();
+
+    public List<OrderEntity> getOrders() {
+        return items.stream().map(x -> x.getOrder()).toList();
+    }
 }

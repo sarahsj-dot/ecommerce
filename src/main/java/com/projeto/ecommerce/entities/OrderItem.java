@@ -2,9 +2,13 @@ package com.projeto.ecommerce.entities;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class OrderItem {
 
@@ -13,9 +17,6 @@ public class OrderItem {
     private int quantity;
     private double price;
 
-    public OrderItem(){
-    }
-
     public OrderItem(OrderEntity order, ProductEntity product, int quantity, double price){
         id.setOrder(order);
         id.setProduct(product);
@@ -23,36 +24,13 @@ public class OrderItem {
         this.price = price;
     }
 
-    public OrderEntity getOrder(){
-        return id.getOrder();
-    }
+    //retorna o order para qual o item pertence, associando a chave composta
+    public OrderEntity getOrder() { return id.getOrder(); }
 
-    public void setOrder(OrderEntity order) {
-        id.setOrder(order);
-    }
+    public void setOrder(OrderEntity order) { id.setOrder(order); }
 
-    public ProductEntity getProduct(){
-        return id.getProduct();
-    }
+    //retorna o product do item, associando a chave composta
+    public ProductEntity getProduct() { return id.getProduct(); }
 
-    public void setProduct(ProductEntity product) {
-        id.setProduct(product);
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
+    public void setProduct(ProductEntity product) { id.setProduct(product); }
 }
