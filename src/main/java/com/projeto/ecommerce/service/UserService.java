@@ -3,6 +3,7 @@ package com.projeto.ecommerce.service;
 import com.projeto.ecommerce.DTOs.UserRequestDTO;
 import com.projeto.ecommerce.DTOs.UserResponseDTO;
 import com.projeto.ecommerce.entities.UserEntity;
+import com.projeto.ecommerce.enums.RoleEnum;
 import com.projeto.ecommerce.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,8 @@ public class UserService {
             user.setName(dto.getName());
             user.setEmail(dto.getEmail());
             user.setPhone(dto.getPhone());
-            user.setPassword(dto.getPassword());
-
+            user.setPassword(passwordEncoder.encode(dto.getPassword()));
+//            user.setRoles(RoleEnum.ROLE_USER);
             user = userRepository.save(user);
 
             return toResponseDTO(user);
