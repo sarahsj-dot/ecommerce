@@ -16,11 +16,10 @@ public class OrderController {
     private final OrderService service;
 
     public OrderController(OrderService service){
-
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping(value = "create")
     public ResponseEntity<OrderResponseDTO> create(@RequestBody OrderRequestDTO dto) {
         OrderResponseDTO response = service.create(dto);
         return ResponseEntity.ok(response);
