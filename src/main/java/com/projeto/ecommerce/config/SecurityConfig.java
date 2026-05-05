@@ -7,12 +7,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+//    private final JwtFilter jwtFilter;
+//
+//    public SecurityConfig(JwtFilter jwtFilter) {
+//        this.jwtFilter = jwtFilter;}
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -21,8 +27,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users/create").permitAll()
                         .requestMatchers("/users/delete", "orders/create").hasRole("ADMIN")
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
+//                addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class )
                 .httpBasic(withDefaults());
         return http.build();
     }
